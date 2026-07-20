@@ -1,0 +1,13 @@
+{
+  "expo": {
+    "name": "VenueVista",
+    "slug": "venue-vista",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/venuevista-logo.png",
+    "userInterfaceStyle": "light",
+    "assetBundlePatterns": ["**/*"],
+    "ios": { "supportsTablet": true, "bundleIdentifier": "com.venuevista.app" },
+    "android": { "package": "com.venuevista.app", "adaptiveIcon": { "foregroundImage": "./assets/venuevista-logo.png", "backgroundColor": "#5B1535" } }
+  }
+}
