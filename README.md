@@ -2,6 +2,12 @@
 
 A premium Telangana function-hall discovery and booking app for Android, iOS, and web.
 
+## Live app
+
+Open VenueVista from any phone or desktop:
+
+### **[Launch VenueVista](https://venue-vista-ruddy.vercel.app)**
+
 ## Local web preview
 
 Install the dependencies and start the web app:
