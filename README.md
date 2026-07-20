@@ -1,6 +1,19 @@
 # VenueVista
 
-A premium Telangana function-hall discovery and booking app for Android and iOS.
+A premium Telangana function-hall discovery and booking app for Android, iOS, and web.
+
+## Local web preview
+
+Install the dependencies and start the web app:
+
+```bash
+npm install
+npm run web
+```
+
+Then open **[http://localhost:8081](http://localhost:8081)** in your browser.
+
+> `localhost` works only on the computer running VenueVista. Start the command above before opening the link. GitHub cannot run a localhost server by itself.
 
 ## Run
 
@@ -10,6 +23,12 @@ npm start
 ```
 
 Scan the QR code with Expo Go, or press `a`, `i`, or `w` for Android, iOS, or web.
+
+If an old version is cached, run:
+
+```bash
+npx expo start --clear --web
+```
 
 ## Live backend setup
 
@@ -30,6 +49,6 @@ supabase functions deploy verify-razorpay-payment
 
 Never place the Razorpay secret key in `.env` or in the mobile application. Only the public key belongs in the app.
 
-## Demo accounts
+## Local accounts
 
-With no `.env`, any valid-looking email and six-character password work locally. Use an email containing `owner` (for example `owner@venuevista.demo`) to open the owner dashboard.
+With no `.env`, accounts are saved locally in the browser or device. Select **Create account**, register with a phone number or email and password, then sign in using the same details.
