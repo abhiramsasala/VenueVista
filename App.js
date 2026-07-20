@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
-  ActivityIndicator, Alert, Dimensions, Image, Linking, Modal, Pressable, ScrollView, StatusBar,
+  ActivityIndicator, Alert, Dimensions, Image, Linking, Modal, Platform, Pressable, ScrollView, StatusBar,
   StyleSheet, Text, TextInput, View,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -13,6 +13,15 @@ const { width } = Dimensions.get('window');
 const plum = '#56142F';
 const gold = '#E69A3B';
 const ink = '#21181C';
+
+function openContact(url) {
+  if (Platform.OS === 'web' && typeof window !== 'undefined') {
+    if (url.startsWith('http')) window.open(url, '_blank', 'noopener,noreferrer');
+    else window.location.href = url;
+    return;
+  }
+  Linking.openURL(url).catch(() => Alert.alert('App unavailable', 'Install or configure the required phone, email, or WhatsApp app and try again.'));
+}
 
 const halls = [
   {
@@ -184,7 +193,7 @@ function Detail({ hall, onClose, onBook, liked, setLiked }) {
           <View style={styles.amenities}>{amenities.map(([icon, label]) => <View style={styles.amenity} key={label}><View style={styles.amenityIcon}><Ionicons name={icon} size={18} color={plum} /></View><Text style={styles.amenityText}>{label}</Text></View>)}</View>
           <Text style={styles.contentTitle}>Contact the venue owner</Text>
           <View style={styles.ownerContact}><View style={styles.ownerAvatar}><Text style={styles.ownerInitial}>{owner.name[0]}</Text></View><View style={{flex:1}}><Text style={styles.ownerRole}>VENUE MANAGER</Text><Text style={styles.ownerName}>{owner.name}</Text><Text style={styles.ownerPhone}>+91 {owner.phone}</Text></View></View>
-          <View style={styles.contactActions}><Pressable onPress={()=>Linking.openURL(`tel:+91${owner.phone}`)} style={styles.contactButton}><Ionicons name="call" size={18} color={plum}/><Text style={styles.contactButtonText}>Call</Text></Pressable><Pressable onPress={()=>Linking.openURL(`https://wa.me/91${owner.phone}?text=${encodeURIComponent(`Hello, I am interested in ${hall.name} on VenueVista.`)}`)} style={styles.contactButton}><Ionicons name="logo-whatsapp" size={19} color="#187A55"/><Text style={styles.contactButtonText}>WhatsApp</Text></Pressable><Pressable onPress={()=>Linking.openURL(`mailto:${owner.email}?subject=${encodeURIComponent(`Enquiry for ${hall.name}`)}`)} style={styles.contactButton}><Ionicons name="mail" size={18} color={gold}/><Text style={styles.contactButtonText}>Email</Text></Pressable></View>
+          <View style={styles.contactActions}><Pressable onPress={()=>openContact(`tel:+91${owner.phone}`)} style={styles.contactButton}><Ionicons name="call" size={18} color={plum}/><Text style={styles.contactButtonText}>Call</Text></Pressable><Pressable onPress={()=>openContact(`https://api.whatsapp.com/send?phone=91${owner.phone}&text=${encodeURIComponent(`Hello, I am interested in ${hall.name} on VenueVista.`)}`)} style={styles.contactButton}><Ionicons name="logo-whatsapp" size={19} color="#187A55"/><Text style={styles.contactButtonText}>WhatsApp</Text></Pressable><Pressable onPress={()=>openContact(`mailto:${owner.email}?subject=${encodeURIComponent(`Enquiry for ${hall.name}`)}&body=${encodeURIComponent(`Hello ${owner.name}, I am interested in booking ${hall.name}. Please share availability and details.`)}`)} style={styles.contactButton}><Ionicons name="mail" size={18} color={gold}/><Text style={styles.contactButtonText}>Email</Text></Pressable></View>
         </View>
       </ScrollView>
       <View style={styles.bookBar}><View><Text style={styles.barPrice}>{hall.price}</Text><Text style={styles.barSub}>per day + taxes</Text></View><Pressable onPress={onBook} style={styles.bookButton}><Text style={styles.bookButtonText}>Check availability</Text><Ionicons name="arrow-forward" size={18} color="#fff" /></Pressable></View>
